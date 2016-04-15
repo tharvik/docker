@@ -8,3 +8,5 @@ RUN echo 'FEATURES="unknown-features-warn parallel-fetch parallel-install"' >> /
 
 RUN mkdir /etc/portage/env
 RUN echo 'FEATURES="test"' > /etc/portage/env/test
+
+COPY emerge-accept /usr/bin/
