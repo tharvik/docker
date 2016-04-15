@@ -8,7 +8,7 @@ proc set_fail {} {
 }
 
 proc activate_exit {} {
-	send "activate $env(NEXPOSE_LICENSE)\r"
+	send "activate $::env(NEXPOSE_LICENSE)\r"
 	send "exit\r"
 	variable ret
 	set ret 0
