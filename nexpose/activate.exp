@@ -1,0 +1,29 @@
+set timeout -1
+cd /opt/rapid7/nexpose/nsc
+spawn ./nsc.sh
+
+proc set_fail {} {
+	variable ret
+	set ret 1
+}
+
+proc activate_exit {} {
+	send "activate $env(NEXPOSE_LICENSE)\r"
+	send "exit\r"
+	variable ret
+	set ret 0
+}
+
+set_fail
+
+while {1} {
+	expect {
+		"Accepting console commands."		{activate_exit}
+		"Exception while executing 'activate"	{set_fail}
+		"Error executing EnginePool task:"	{send "^C"}
+		eof					{break}
+	}
+}
+
+wait
+exit $ret
