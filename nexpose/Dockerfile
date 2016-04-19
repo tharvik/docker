@@ -1,4 +1,4 @@
-FROM whithajess/dockernexpose
+FROM whithajess/dockernexpose:latest
 
 ARG NEXPOSE_LICENSE
 

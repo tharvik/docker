@@ -1,4 +1,4 @@
-FROM infoslack/nessus
+FROM infoslack/nessus:latest
 
 ARG NESSUS_SERIAL
 

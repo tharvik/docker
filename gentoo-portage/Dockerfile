@@ -1,4 +1,4 @@
-FROM gentoo/stage3-amd64
+FROM gentoo/stage3-amd64:latest
 
 RUN emerge-webrsync
 RUN eselect news read

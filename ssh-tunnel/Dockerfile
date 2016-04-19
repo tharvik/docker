@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:latest
 
 ARG SSH_IDENTITY
 ARG SSH_REMOTE_IP
