@@ -1,0 +1,39 @@
+set timeout -1
+spawn /opt/nessus/sbin/nessusd
+
+proc curl {method path args} {
+	return [exec curl	--insecure --silent --fail	\
+				--header "Content-Type: application/json"	\
+				-X$method https://localhost:8834/$path	\
+				{*}$args]
+}
+
+proc get_token {args} {
+	set r [curl POST session	\
+			--data "{\"username\": \"admin\", \"password\": \"admin\"}"	\
+			{*}$args]
+
+	return [lindex [split $r "\""] 3]
+}
+
+expect "All plugins loaded"
+
+while { [catch {get_token --max-time 5} _ options] } {
+	set details [dict get $options -errorinfo]
+	set r [string first "\"token\"" $details]
+	if {$r != -1} {
+		break
+	}
+
+	sleep 1
+}
+
+set token [get_token]
+
+set r [curl PUT session/keys	\
+		--header "X-Cookie: token=$token;"	\
+		--data "{}"]
+send_user $r
+
+send -- ""
+wait
