@@ -29,7 +29,6 @@ while { [catch {get_token --max-time 5} _ options] } {
 }
 
 set token [get_token]
-
 set r [curl PUT session/keys	\
 		--header "X-Cookie: token=$token;"	\
 		--data "{}"]
