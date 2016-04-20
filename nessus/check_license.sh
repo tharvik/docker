@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$(echo "${NESSUS_LICENSE}" | cut -c 1-31)" != '-----BEGIN TENABLE LICENSE-----' ]
+if [ "$(echo "${NESSUS_LICENSE}" | head -n 1 | cut -c 1-31)" != '-----BEGIN TENABLE LICENSE-----' ]
 then
 	echo 'Please provide a valid nessus license file with the next challenge'
 	/opt/nessus/sbin/nessuscli fetch --challenge
