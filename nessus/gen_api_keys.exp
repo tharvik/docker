@@ -32,7 +32,8 @@ set token [get_token]
 set r [curl PUT session/keys	\
 		--header "X-Cookie: token=$token;"	\
 		--data "{}"]
-send_user $r
+send_user "NESSUS_ACCESS_KEY='[lindex [split $r "\""] 7]'"
+send_user "NESSUS_SECRET_KEY='[lindex [split $r "\""] 3]'"
 
 send -- ""
 wait
