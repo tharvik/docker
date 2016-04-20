@@ -1,12 +1,16 @@
 FROM infoslack/nessus:latest
 
-ARG NESSUS_SERIAL
+ARG NESSUS_LICENSE
+COPY check_license.sh /
+RUN /check_license.sh
 
 RUN apt-get update
 RUN apt-get install -y expect-dev curl
 
-RUN /opt/nessus/sbin/nessuscli fetch --register "${NESSUS_SERIAL}"
-RUN /opt/nessus/sbin/nessuscli fetch --check
+RUN echo "${NESSUS_LICENSE}" > /nessus.license
+RUN /opt/nessus/sbin/nessuscli fetch --register-offline /nessus.license
+
+RUN /opt/nessus/sbin/nessuscli update --all
 
 COPY add_user.exp /
 RUN expect /add_user.exp
